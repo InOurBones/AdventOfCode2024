@@ -10,14 +10,11 @@ def count_vertical(input: str) -> int:
     return count_horizontal(full_input)
 
 def count_diagonal(input: str) -> int:
-    result = 0
-    for inp in (input, list(reversed(input))):
-        full_input = [[] for _ in range(len(inp) * 2 - 1)]
-        for i in range(len(inp)):
-            for j, char in enumerate(inp[i]):
-                full_input[i+j].append(char)
-        result += count_horizontal(["".join(x) for x in full_input])
-    return result
+    full_input = [[] for _ in range(len(input) * 2 - 1)]
+    for i in range(len(input)):
+        for j, char in enumerate(input[i]):
+            full_input[i+j].append(char)
+    return count_horizontal(["".join(x) for x in full_input])
 
-total = count_horizontal(input) + count_vertical(input) + count_diagonal(input)
+total = count_horizontal(input) + count_vertical(input) + count_diagonal(input) + count_diagonal(list(reversed(input)))
 print(total)
