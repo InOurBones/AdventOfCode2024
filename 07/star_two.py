@@ -1,8 +1,14 @@
 import itertools
 
-with open("./07/input.txt", "r") as file:
+with open("./07/dummy.txt", "r") as file:
     input = file.read().split("\n")
     input = [(int(x.split(": ")[0]), list(map(int, x.split(": ")[1].split(" ")))) for x in input]
+
+operators = {
+    "0": lambda start, num: start + num,
+    "1": lambda start, num: start * num,
+    "2": lambda start, num: int( str(start) + str(num) )
+}
 
 total = 0
 for res, nums in input:
@@ -10,12 +16,8 @@ for res, nums in input:
         nums_copy = nums.copy()
         start = nums_copy.pop(0)
         for oper in x:
-            if oper == "0":
-                start += nums_copy.pop(0)
-            elif oper == "1":
-                start *= nums_copy.pop(0)
-            elif oper == "2":
-                start = int( str(start) + str(nums_copy.pop(0)) )
+            start = operators[oper](start, nums_copy.pop(0))
+
             if start > res:
                 break
         if start == res:
