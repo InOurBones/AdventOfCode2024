@@ -11,7 +11,7 @@ operators = {
 
 total = 0
 for res, nums in input:
-    for x in map(''.join, itertools.product('01', repeat=len(nums) - 1)):
+    for x in itertools.product('01', repeat=len(nums) - 1):
         nums_copy = nums.copy()
         start = nums_copy.pop(0)
         for oper in x:
