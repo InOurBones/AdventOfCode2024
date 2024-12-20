@@ -1,4 +1,4 @@
-with open("./10/dummy.txt", "r") as file:
+with open("./10/input.txt", "r") as file:
     input = [list(map(int, x)) for x in file.read().split("\n")]
 
 trailheads = []
@@ -14,14 +14,14 @@ def paths_around(x, y) -> set[tuple[int, int]]:
 
     for x, y in to_check:
         try:
-            if own_height - 1 <= input[y][x] <= own_height + 1:
+            if -1 not in (x, y) and input[y][x] == own_height + 1:
                 result.add((x, y))
         except IndexError:
             pass
     return result
 
+total = 0
 for x, y in trailheads:
-    total = 0
     paths_found = set()
     paths_to_check = paths_around(x, y)
     while not paths_to_check.issubset(paths_found):
@@ -32,4 +32,5 @@ for x, y in trailheads:
             total += 1
         paths_found.add(path)
         paths_to_check = paths_to_check.union(paths_around(*path))
-    print(total)
+
+print(total)
