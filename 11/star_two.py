@@ -1,18 +1,20 @@
+from collections import Counter
+
 with open("./11/input.txt", "r") as file:
-    input = list(map(int, file.read().split(" ")))
+    input = Counter(map(int, file.read().split(" ")))
 
 blink_amount = 75
 for _ in range(blink_amount):
-    result = []
-    for x in input:
+    result = Counter()
+    for x, amount in input.items():
         if x == 0:
-            result.append(1)
+            result[1] += amount
         elif x >= 10 and len(str(x)) % 2 == 0:
             half = int(len(str(x))/2)
-            result.append(int(str(x)[:half]))
-            result.append(int(str(x)[half:]))
+            result[int(str(x)[:half])] += amount
+            result[int(str(x)[half:])] += amount
         else:
-            result.append(x * 2024)
+            result[x * 2024] += amount
     input = result
-total = len(result)
+total = sum(input.values())
 print(total)
