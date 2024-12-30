@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import Counter
 
 with open("./22/input.txt", "r") as file:
     input = map(int, file.read().split("\n"))
@@ -9,7 +9,7 @@ def calc_num(num: int) -> int:
     num = ((num * 2048) ^ num) % 16777216
     return num
 
-ranges = defaultdict(list)
+ranges = Counter()
 for num in input:
     visited = set()
     changes = list()
@@ -22,9 +22,9 @@ for num in input:
         if len(changes) == 4:
             key = ",".join(map(str, changes))
             if key not in visited:
-                ranges[key].append(num % 10)
+                ranges[key] += num % 10
                 visited.add(key)
             changes.pop(0)
 
-total = max(sum(val) for val in ranges.values())
+total = max(ranges.values())
 print(total)
